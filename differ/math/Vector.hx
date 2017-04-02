@@ -12,6 +12,7 @@ import differ.math.Matrix;
     /** 2D vector class */
 class Vector {
 
+
         /** The x component */
     public var x  : Float = 0;
         /** The y component */

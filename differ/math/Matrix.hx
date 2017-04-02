@@ -90,6 +90,36 @@ class Matrix  {
         ty *= y;
 
     } //scale
+	
+	public function invert()
+	{
+		var a = this.a;
+		var	b = this.b;
+		var c = this.c;
+		var d = this.d;
+		var tx = this.tx;
+		var ty = this.ty;
+		var dt = (a * d - b * c);
+
+		this.a = d / dt;
+		this.b = -b / dt;
+		this.c = -c / dt;
+		this.d = a / dt;
+		this.tx = (c * ty - d * tx) / dt;
+		this.ty = -(a * ty - b * tx) / dt;
+	}
+	
+	public function copy(m:Matrix):Matrix
+	{
+		a = m.a;
+		b = m.b;
+		c = m.c;
+		d = m.d;
+		tx = m.tx;
+		ty = m.ty;
+		
+		return this;
+	}
 
     public function toString ():String {
 
