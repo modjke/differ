@@ -37,7 +37,19 @@ class Shape {
     var _scaleX : Float = 1;
     var _scaleY : Float = 1;
 	
-    var _transformMatrix : Matrix;
+	var _transformDirty : Bool  = false;
+	
+    @:isVar var _transformMatrix(get, null) : Matrix;
+	inline function get__transformMatrix()
+	{
+		if (_transformDirty) 
+		{
+			_transformMatrix.compose( _position, _rotation_radians, _scale );
+			_transformDirty = false;
+		}
+		
+		return _transformMatrix;
+	}
 
 
 //Public API
@@ -82,12 +94,6 @@ class Shape {
 
 //Getters/Setters
 
-    function refresh_transform() {
-		
-		_transformMatrix.compose( _position, _rotation_radians, _scale );
-
-    }
-
 //.position
 
     function get_position() : Vector {
@@ -96,7 +102,7 @@ class Shape {
 
     function set_position( v : Vector ) : Vector {
         _position = v;
-        refresh_transform();
+        _transformed();
         return _position;
     }
 
@@ -108,7 +114,7 @@ class Shape {
 
     function set_x(x : Float) : Float {
         _position.x = x;
-        refresh_transform();
+		_transformed();
         return _position.x;
     }
 
@@ -120,7 +126,7 @@ class Shape {
 
     function set_y(y : Float) : Float {
         _position.y = y;
-        refresh_transform();
+        _transformed();
         return _position.y;
     }
 
@@ -134,7 +140,7 @@ class Shape {
 
         _rotation_radians = v * (Math.PI / 180);
 
-        refresh_transform();
+        _transformed();
 
         return _rotation = v;
 
@@ -149,7 +155,7 @@ class Shape {
     function set_scaleX( scale : Float ) : Float {
         _scaleX = scale;
         _scale.x = _scaleX;
-        refresh_transform();
+		_transformed();
         return _scaleX;
     }
 
@@ -162,8 +168,12 @@ class Shape {
     function set_scaleY(scale:Float) : Float {
         _scaleY = scale;
         _scale.y = _scaleY;
-        refresh_transform();
+        _transformed();
         return _scaleY;
     }
 
+	function _transformed()
+	{
+		_transformDirty = true;
+	}
 }

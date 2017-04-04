@@ -15,7 +15,7 @@ class Polygon extends Shape {
 
     var _transformedVertices : Array<Vector>;
     var _vertices : Array<Vector>;
-	var _transformed : Bool = false;
+	var _transformedVerticesDirty : Bool = false;
 
 
         /** Create a new polygon with a given set of vertices at position x,y. */
@@ -142,9 +142,9 @@ class Polygon extends Shape {
 
     function get_transformedVertices() : Array<Vector> {
 
-        if (_transformed) {
+        if (_transformedVerticesDirty) {
 						
-			_transformed = false;
+			_transformedVerticesDirty = false;
 
             var _count : Int = _vertices.length;
 
@@ -160,11 +160,11 @@ class Polygon extends Shape {
         return _vertices;
     }
 	
-	override function refresh_transform() 
+	override function _transformed() 
 	{
-		super.refresh_transform();
+		super._transformed();
 		
-		_transformed = true;
+		_transformedVerticesDirty = true;
 	}
 
 

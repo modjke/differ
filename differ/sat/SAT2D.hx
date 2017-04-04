@@ -279,6 +279,10 @@ class SAT2D {
         var deltaY = ray.end.y - startY;
 
         var verts = polygon.transformedVertices;
+		var min0:Int = verts.length - 1;
+		var min1:Int = 0;
+		var max0:Int = verts.length - 1;
+		var max1:Int = 0;
         var v1 = verts[verts.length - 1];
         var v2 = verts[0];
 
@@ -291,6 +295,7 @@ class SAT2D {
             if(ua > max_u) max_u = ua;
         }
 
+	
         for(i in 1...verts.length) {
 
             v1 = verts[i - 1];
@@ -300,9 +305,20 @@ class SAT2D {
             ua = rayU(ud, startX, startY, v1.x, v1.y, v2.x - v1.x, v2.y - v1.y);
             ub = rayU(ud, startX, startY, v1.x, v1.y, deltaX, deltaY);
 
-            if(ud != 0.0 && ub >= 0.0 && ub <= 1.0) {
-                if(ua < min_u) min_u = ua;
-                if(ua > max_u) max_u = ua;
+            if (ud != 0.0 && ub >= 0.0 && ub <= 1.0) {
+				
+                if (ua < min_u) {
+					min0 = i - 1;
+					min1 = i;
+					min_u = ua;
+				}
+				
+                if (ua > max_u) 
+				{
+					max0 = i - 1;
+					max1 = i;
+					max_u = ua;
+				}
             }
 
         } //each vert
@@ -319,6 +335,11 @@ class SAT2D {
                 into.ray = ray;
                 into.start = min_u; 
                 into.end = max_u;
+				into.start0 = min0;
+				into.start1 = min1;
+				into.end0 = max0;
+				into.end1 = max1;
+				
             return into;
         }
 

@@ -17,6 +17,16 @@ class RayCollision {
     var start:Float = 0.0;
         /** Distance along ray that the intersection ended at. */
     var end:Float = 0.0;
+	
+		/* Indexes that took the hit at start */		
+		/* Set only for Polygon/Ray collision */
+	var start0:Int;
+	var start1:Int;
+	
+		/* Indexes that took the hit at end */		
+		/* Set only for Polygon/Ray collision */
+	var end0:Int;
+	var end1:Int;
 
     @:noCompletion
     inline function new() {}

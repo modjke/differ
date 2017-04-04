@@ -44,6 +44,14 @@ class Vector {
 		
 		return this;
 	}
+	
+		/** Sets x & y and returns this vector */
+	public function set(x:Float, y:Float):Vector
+	{
+		this.x = x;
+		this.y = y;
+		return this;
+	}
 
         /** Transforms Vector based on the given Matrix. Returns this vector, modified. */
     public function transform(matrix:Matrix):Vector {
